@@ -236,13 +236,20 @@ def main():
     SKILLS_OUT.mkdir(parents=True)
     AGENTS_OUT.mkdir(parents=True)
 
-    # Copy .claude-plugin metadata if present in the repo's plugins dir
-    repo_plugin_meta = Path(__file__).parent / "plugins" / "feynman" / ".claude-plugin"
+    # Copy .claude-plugin metadata from the repo's plugin-meta/ dir
+    plugin_meta_src = Path(__file__).parent / "plugin-meta"
     out_plugin_meta = OUTPUT_DIR / ".claude-plugin"
-    if repo_plugin_meta.exists():
+    if plugin_meta_src.exists():
         if out_plugin_meta.exists():
             shutil.rmtree(out_plugin_meta)
-        shutil.copytree(repo_plugin_meta, out_plugin_meta)
+        out_plugin_meta.mkdir(parents=True)
+        for f in plugin_meta_src.iterdir():
+            shutil.copy2(f, out_plugin_meta / f.name)
+
+    # Copy README.md if present
+    readme_src = plugin_meta_src / "README.md" if plugin_meta_src.exists() else None
+    if readme_src and readme_src.exists():
+        shutil.copy2(readme_src, OUTPUT_DIR / "README.md")
 
     # Process prompt-referenced skills
     print("📝 Processing prompt-referenced skills:")
