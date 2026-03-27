@@ -5,8 +5,8 @@
     "version": "1.0.0"
   },
   "owner": {
-    "name": "getcompanion-ai",
-    "url": "https://github.com/getcompanion-ai"
+    "name": "Maverobot",
+    "url": "https://github.com/Maverobot"
   },
   "plugins": [
     {
@@ -15,8 +15,8 @@
       "description": "Research-first AI agent skills for GitHub Copilot CLI. Includes deep research, literature review, paper writing, peer review, code audits, source comparison, replication, and more.",
       "version": "1.0.0",
       "author": {
-        "name": "Companion AI",
-        "url": "https://github.com/getcompanion-ai"
+        "name": "Maverobot",
+        "url": "https://github.com/Maverobot"
       },
       "license": "MIT",
       "homepage": "https://github.com/getcompanion-ai/feynman",

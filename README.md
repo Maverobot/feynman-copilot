@@ -28,13 +28,13 @@
 ### Method 1 — One command (easiest)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/getcompanion-ai/feynman-copilot/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/install.sh | bash
 ```
 
 ### Method 2 — Native plugin marketplace
 
 ```bash
-copilot plugin marketplace add getcompanion-ai/feynman-copilot
+copilot plugin marketplace add Maverobot/feynman-copilot
 copilot plugin install feynman@feynman-copilot
 ```
 
@@ -158,13 +158,13 @@ This Copilot CLI package adapts Feynman's workflows with these changes:
 ## Updating
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/getcompanion-ai/feynman-copilot/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/install.sh | bash
 ```
 
 ## Uninstalling
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/getcompanion-ai/feynman-copilot/main/uninstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/uninstall.sh)
 ```
 
 Or manually:
@@ -178,6 +178,7 @@ rm -rf ~/.copilot/marketplace-cache/feynman-copilot
 
 ## Credits
 
+- **[Maverobot](https://github.com/Maverobot)** — Maintainer of feynman-copilot
 - **[Companion AI](https://github.com/getcompanion-ai)** — Creator of [Feynman](https://github.com/getcompanion-ai/feynman)
 - Copilot CLI packaging follows the pattern established by [DwainTR/superpowers-copilot](https://github.com/DwainTR/superpowers-copilot)
 

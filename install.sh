@@ -2,9 +2,9 @@
 set -euo pipefail
 
 # Feynman Research Agent for GitHub Copilot CLI — One-line installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/getcompanion-ai/feynman-copilot/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/install.sh | bash
 
-REPO="getcompanion-ai/feynman-copilot"
+REPO="Maverobot/feynman-copilot"
 COPILOT_HOME="${COPILOT_HOME:-$HOME/.copilot}"
 CACHE_DIR="$COPILOT_HOME/marketplace-cache/feynman-copilot"
 
