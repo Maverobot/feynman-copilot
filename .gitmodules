@@ -1,0 +1,3 @@
+[submodule "feynman"]
+	path = feynman
+	url = ../feynman

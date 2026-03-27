@@ -5,37 +5,35 @@
 [![Agents](https://img.shields.io/badge/Agents-5-purple)](plugins/feynman/agents)
 [![Source](https://img.shields.io/badge/Source-getcompanion--ai%2Ffeynman-orange)](https://github.com/getcompanion-ai/feynman)
 
-> **Packages the [Feynman](https://github.com/getcompanion-ai/feynman) research agent's skills and subagents for GitHub Copilot CLI. All research workflows are self-contained and adapted for Copilot CLI's native skill and agent system.**
+> **Thin wrapper around [Feynman](https://github.com/getcompanion-ai/feynman) that auto-generates Copilot CLI-compatible skills and agents from the upstream source. No content is duplicated — a Python generator reads the feynman submodule and produces adapted SKILL.md / agent .md files at install time.**
 
-## What is Feynman?
+## How it works
 
-[Feynman](https://github.com/getcompanion-ai/feynman) is a research-first AI agent that investigates questions, reads primary sources, compares evidence, and produces reproducible written artifacts. This repo brings those capabilities to GitHub Copilot CLI:
+This repo includes the [feynman](https://github.com/getcompanion-ai/feynman) repo as a **git submodule**. A `generate.py` script reads the original skills, prompts, and agent definitions, then:
 
-- **Deep Research** → source-heavy investigations with cited briefs and provenance tracking
-- **Literature Review** → paper search and primary-source synthesis
-- **Peer Review** → simulated tough but constructive review with inline annotations
-- **Paper Writing** → turn research notes into polished drafts with citations
-- **Paper-Code Audit** → compare paper claims against public codebases
-- **Source Comparison** → grounded comparison matrices across multiple sources
-- **Replication** → plan or execute reproductions of papers, claims, benchmarks
-- **Alpha Research** → search, read, and query academic papers via the alpha CLI
-- **ELI5** → explain technical papers in plain English
-- **Autoresearch** → autonomous experiment optimization loops
-- And more: Docker sandboxes, Modal/RunPod GPU compute, research watches, session management
+1. **Self-contained skills** (7) are copied with Copilot CLI YAML frontmatter added
+2. **Prompt-referenced skills** (11) have their `prompts/*.md` content inlined with Pi-specific tool references replaced by Copilot CLI equivalents
+3. **Agent profiles** (5) are adapted from `.feynman/agents/*.md` and `.feynman/SYSTEM.md`
+
+When feynman updates, just re-run the installer — the generator picks up changes automatically.
 
 ## Installation
 
-### Method 1 — One command (easiest)
+### One command
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/install.sh | bash
 ```
 
-### Method 2 — Native plugin marketplace
+**Requirements:** git, python3
+
+### Manual / development
 
 ```bash
-copilot plugin marketplace add Maverobot/feynman-copilot
-copilot plugin install feynman@feynman-copilot
+git clone --recurse-submodules https://github.com/Maverobot/feynman-copilot.git
+cd feynman-copilot
+python3 generate.py   # generates plugins/feynman/skills/ and plugins/feynman/agents/
+./install.sh          # or manually symlink to ~/.copilot/
 ```
 
 ### Verify
@@ -46,15 +44,9 @@ Start a new Copilot CLI session and run:
 /skills list
 ```
 
-You should see all 18 Feynman skills listed. Check agents with:
-
-```
-/agent
-```
+You should see all 18 Feynman skills. Check agents with `/agent`.
 
 ### Optional: Install alpha CLI for paper search
-
-Several skills use the `alpha` CLI for academic paper search, reading, and Q&A:
 
 ```bash
 npm install -g @companion-ai/alpha-hub
@@ -175,6 +167,33 @@ rm -f ~/.copilot/agents/{feynman,researcher,reviewer,writer,verifier}.md
 rm -rf ~/.copilot/marketplace-cache/feynman-copilot
 # Remove the <!-- feynman-installed --> section from ~/.copilot/copilot-instructions.md
 ```
+
+## Architecture
+
+```
+feynman-copilot/
+├── feynman/                    ← git submodule (upstream source of truth)
+├── generate.py                 ← reads feynman/, writes plugins/feynman/
+├── plugins/feynman/
+│   ├── skills/*/SKILL.md       ← generated (gitignored)
+│   └── agents/*.md             ← generated (gitignored)
+├── install.sh                  ← clone + generate + symlink
+├── uninstall.sh
+├── .claude-plugin/marketplace.json
+└── README.md
+```
+
+### Tool substitutions applied by generate.py
+
+| Pi tool | Copilot CLI equivalent |
+|---------|----------------------|
+| `subagent` | `task` tool with custom agents |
+| `memory_remember` | Write to file on disk |
+| `pi-charts` | Mermaid diagrams in markdown |
+| `schedule_prompt` | Manual (cron/watch scripts) |
+| `init/run/log_experiment` | Bash scripts with git commits |
+| `fetch_content` | `web_fetch` tool |
+| `subagent_status` | `read_agent` tool |
 
 ## Credits
 

@@ -1,3 +1,7 @@
 node_modules/
 .DS_Store
 *.log
+
+# Generated output — rebuilt by generate.py from the feynman submodule
+plugins/feynman/skills/
+plugins/feynman/agents/

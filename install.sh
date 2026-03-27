@@ -12,13 +12,17 @@ echo "🔬 Feynman Research Agent for GitHub Copilot CLI — Installer"
 echo "============================================================"
 echo ""
 
-# Check if git is available
+# Check prerequisites
 if ! command -v git &> /dev/null; then
     echo "❌ Git is required but not installed."
     exit 1
 fi
 
-# Check if copilot CLI is installed
+if ! command -v python3 &> /dev/null; then
+    echo "❌ Python 3 is required for skill generation but not found."
+    exit 1
+fi
+
 if ! command -v copilot &> /dev/null; then
     echo "⚠️  GitHub Copilot CLI not found in PATH."
     echo "   Install it first: https://github.com/github/copilot-cli"
@@ -26,7 +30,6 @@ if ! command -v copilot &> /dev/null; then
     echo ""
 fi
 
-# Check for alpha CLI (optional)
 if ! command -v alpha &> /dev/null; then
     echo "ℹ️  alpha CLI not found. Paper search skills require it."
     echo "   Install with: npm install -g @companion-ai/alpha-hub"
@@ -34,20 +37,27 @@ if ! command -v alpha &> /dev/null; then
     echo ""
 fi
 
-# Clone or update the repo
+# Clone or update the repo (with submodules)
 if [ -d "$CACHE_DIR" ]; then
     echo "📦 Updating existing cache..."
     cd "$CACHE_DIR"
     git pull --quiet 2>/dev/null || {
         echo "   Cache update failed, re-cloning..."
         rm -rf "$CACHE_DIR"
-        git clone --quiet "https://github.com/$REPO.git" "$CACHE_DIR"
+        git clone --quiet --recurse-submodules "https://github.com/$REPO.git" "$CACHE_DIR"
     }
+    git submodule update --init --quiet 2>/dev/null
 else
     echo "📦 Cloning repository..."
     mkdir -p "$(dirname "$CACHE_DIR")"
-    git clone --quiet "https://github.com/$REPO.git" "$CACHE_DIR"
+    git clone --quiet --recurse-submodules "https://github.com/$REPO.git" "$CACHE_DIR"
 fi
+
+# Generate skills and agents from feynman submodule
+echo ""
+echo "⚙️  Generating Copilot CLI skills from feynman source..."
+cd "$CACHE_DIR"
+python3 generate.py
 
 # Link skills
 SKILLS_SRC="$CACHE_DIR/plugins/feynman/skills"
@@ -109,8 +119,8 @@ INSTRUCTIONS
 fi
 
 # Count installed items
-SKILL_COUNT=$(ls -d "$SKILLS_DST"/*/ 2>/dev/null | wc -l | tr -d ' ')
-AGENT_COUNT=$(ls "$AGENTS_SRC"/*.md 2>/dev/null | wc -l | tr -d ' ')
+SKILL_COUNT=$(find "$SKILLS_DST" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
+AGENT_COUNT=$(find "$AGENTS_SRC" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
 echo ""
 echo "🎉 Feynman installed successfully!"
