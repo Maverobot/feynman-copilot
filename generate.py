@@ -228,13 +228,21 @@ def main():
         print("   Run: git submodule update --init")
         sys.exit(1)
 
-    # Clean output
+    # Clean output (preserve .claude-plugin and README.md)
     if SKILLS_OUT.exists():
         shutil.rmtree(SKILLS_OUT)
     if AGENTS_OUT.exists():
         shutil.rmtree(AGENTS_OUT)
     SKILLS_OUT.mkdir(parents=True)
     AGENTS_OUT.mkdir(parents=True)
+
+    # Copy .claude-plugin metadata if present in the repo's plugins dir
+    repo_plugin_meta = Path(__file__).parent / "plugins" / "feynman" / ".claude-plugin"
+    out_plugin_meta = OUTPUT_DIR / ".claude-plugin"
+    if repo_plugin_meta.exists():
+        if out_plugin_meta.exists():
+            shutil.rmtree(out_plugin_meta)
+        shutil.copytree(repo_plugin_meta, out_plugin_meta)
 
     # Process prompt-referenced skills
     print("📝 Processing prompt-referenced skills:")

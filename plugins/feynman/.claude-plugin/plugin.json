@@ -1,0 +1,13 @@
+{
+  "name": "feynman",
+  "description": "Research-first AI agent skills for GitHub Copilot CLI. Includes deep research, literature review, paper writing, peer review, code audits, source comparison, replication, and more.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Maverobot",
+    "url": "https://github.com/Maverobot"
+  },
+  "homepage": "https://github.com/getcompanion-ai/feynman",
+  "repository": "https://github.com/Maverobot/feynman-copilot",
+  "license": "MIT",
+  "keywords": ["research", "papers", "literature-review", "deep-research", "peer-review", "academic", "arxiv"]
+}

@@ -5,7 +5,8 @@ set -euo pipefail
 
 COPILOT_HOME="${COPILOT_HOME:-$HOME/.copilot}"
 CACHE_DIR="$COPILOT_HOME/marketplace-cache/feynman-copilot"
-SKILLS_DST="$COPILOT_HOME/skills/feynman"
+PLUGIN_DIR="$COPILOT_HOME/installed-plugins/feynman-copilot"
+OLD_SKILLS="$COPILOT_HOME/skills/feynman"
 AGENTS_DIR="$COPILOT_HOME/agents"
 INSTRUCTIONS_FILE="$COPILOT_HOME/copilot-instructions.md"
 
@@ -13,12 +14,18 @@ echo "🔬 Feynman Research Agent — Uninstaller"
 echo "========================================"
 echo ""
 
-# Remove skills
-if [ -L "$SKILLS_DST" ] || [ -d "$SKILLS_DST" ]; then
-    rm -rf "$SKILLS_DST"
-    echo "✅ Skills removed"
+# Remove plugin installation
+if [ -d "$PLUGIN_DIR" ] || [ -L "$PLUGIN_DIR" ]; then
+    rm -rf "$PLUGIN_DIR"
+    echo "✅ Plugin removed"
 else
-    echo "ℹ️  Skills not found (already removed)"
+    echo "ℹ️  Plugin not found (already removed)"
+fi
+
+# Remove old-style skills symlink
+if [ -L "$OLD_SKILLS" ] || [ -d "$OLD_SKILLS" ]; then
+    rm -rf "$OLD_SKILLS"
+    echo "✅ Old skills symlink removed"
 fi
 
 # Remove agents

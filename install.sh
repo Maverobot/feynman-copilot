@@ -7,6 +7,7 @@ set -euo pipefail
 REPO="Maverobot/feynman-copilot"
 COPILOT_HOME="${COPILOT_HOME:-$HOME/.copilot}"
 CACHE_DIR="$COPILOT_HOME/marketplace-cache/feynman-copilot"
+PLUGIN_DIR="$COPILOT_HOME/installed-plugins/feynman-copilot/feynman"
 
 echo "🔬 Feynman Research Agent for GitHub Copilot CLI — Installer"
 echo "============================================================"
@@ -59,19 +60,21 @@ echo "⚙️  Generating Copilot CLI skills from feynman source..."
 cd "$CACHE_DIR"
 python3 generate.py
 
-# Link skills
-SKILLS_SRC="$CACHE_DIR/plugins/feynman/skills"
-SKILLS_DST="$COPILOT_HOME/skills/feynman"
+# Install as a proper Copilot CLI plugin (same pattern as superpowers-copilot)
+echo ""
+echo "📦 Installing as Copilot CLI plugin..."
+mkdir -p "$(dirname "$PLUGIN_DIR")"
 
-mkdir -p "$COPILOT_HOME/skills"
-if [ -L "$SKILLS_DST" ] || [ -d "$SKILLS_DST" ]; then
-    echo "🔄 Removing old skills link..."
-    rm -rf "$SKILLS_DST"
+# Remove old installation if present
+if [ -d "$PLUGIN_DIR" ] || [ -L "$PLUGIN_DIR" ]; then
+    rm -rf "$PLUGIN_DIR"
 fi
-ln -s "$SKILLS_SRC" "$SKILLS_DST"
-echo "✅ Skills linked: $SKILLS_DST → $SKILLS_SRC"
 
-# Link agents
+# Symlink the generated plugin directory
+ln -s "$CACHE_DIR/plugins/feynman" "$PLUGIN_DIR"
+echo "✅ Plugin installed: $PLUGIN_DIR"
+
+# Also symlink agents to ~/.copilot/agents/ for direct agent access
 AGENTS_SRC="$CACHE_DIR/plugins/feynman/agents"
 AGENTS_DIR="$COPILOT_HOME/agents"
 mkdir -p "$AGENTS_DIR"
@@ -85,6 +88,13 @@ for agent_file in "$AGENTS_SRC"/*.md; do
     ln -s "$agent_file" "$agent_dst"
     echo "✅ Agent linked: $agent_name"
 done
+
+# Clean up old-style installation (skills in ~/.copilot/skills/)
+OLD_SKILLS="$COPILOT_HOME/skills/feynman"
+if [ -L "$OLD_SKILLS" ] || [ -d "$OLD_SKILLS" ]; then
+    rm -rf "$OLD_SKILLS"
+    echo "🔄 Cleaned up old-style skills symlink"
+fi
 
 # Add custom instructions if not already present
 INSTRUCTIONS_FILE="$COPILOT_HOME/copilot-instructions.md"
@@ -119,8 +129,8 @@ INSTRUCTIONS
 fi
 
 # Count installed items
-SKILL_COUNT=$(find -L "$SKILLS_DST" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
-AGENT_COUNT=$(find "$AGENTS_SRC" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+SKILL_COUNT=$(find -L "$PLUGIN_DIR/skills" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
+AGENT_COUNT=$(find -L "$PLUGIN_DIR/agents" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
 echo ""
 echo "🎉 Feynman installed successfully!"
