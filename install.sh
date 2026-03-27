@@ -119,7 +119,7 @@ INSTRUCTIONS
 fi
 
 # Count installed items
-SKILL_COUNT=$(find "$SKILLS_DST" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
+SKILL_COUNT=$(find -L "$SKILLS_DST" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
 AGENT_COUNT=$(find "$AGENTS_SRC" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
 echo ""
