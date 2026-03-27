@@ -1,26 +1,20 @@
 {
   "name": "feynman-copilot",
-  "metadata": {
-    "description": "Feynman research agent skills and subagents for GitHub Copilot CLI — deep research, literature reviews, paper audits, peer review, and proven research workflows.",
-    "version": "1.0.0"
-  },
+  "description": "Feynman research agent skills and subagents for GitHub Copilot CLI",
   "owner": {
     "name": "Maverobot",
-    "url": "https://github.com/Maverobot"
+    "email": "zheng@maverobot.com"
   },
   "plugins": [
     {
       "name": "feynman",
-      "source": "./plugins/feynman",
-      "description": "Research-first AI agent skills for GitHub Copilot CLI. Includes deep research, literature review, paper writing, peer review, code audits, source comparison, replication, and more.",
+      "description": "Research-first AI agent skills: deep research, literature review, paper writing, peer review, code audits, and more",
       "version": "1.0.0",
+      "source": "./",
       "author": {
         "name": "Maverobot",
-        "url": "https://github.com/Maverobot"
-      },
-      "license": "MIT",
-      "homepage": "https://github.com/getcompanion-ai/feynman",
-      "keywords": ["research", "papers", "literature-review", "deep-research", "peer-review", "academic", "arxiv"]
+        "email": "zheng@maverobot.com"
+      }
     }
   ]
 }

@@ -48,6 +48,18 @@ if [ -f "$INSTRUCTIONS_FILE" ]; then
     fi
 fi
 
+# Remove plugin registration from config.json
+CONFIG_FILE="$COPILOT_HOME/config.json"
+if [ -f "$CONFIG_FILE" ]; then
+    python3 -c "
+import json
+config = json.load(open('$CONFIG_FILE'))
+plugins = config.get('installed_plugins', [])
+config['installed_plugins'] = [p for p in plugins if p.get('name') != 'feynman']
+json.dump(config, open('$CONFIG_FILE', 'w'), indent=4)
+" 2>/dev/null && echo "✅ Plugin deregistered from config.json"
+fi
+
 # Remove cache
 if [ -d "$CACHE_DIR" ]; then
     rm -rf "$CACHE_DIR"

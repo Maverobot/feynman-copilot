@@ -89,6 +89,42 @@ for agent_file in "$AGENTS_SRC"/*.md; do
     echo "✅ Agent linked: $agent_name"
 done
 
+# Register plugin in ~/.copilot/config.json (required for Copilot CLI discovery)
+CONFIG_FILE="$COPILOT_HOME/config.json"
+if [ -f "$CONFIG_FILE" ]; then
+    if python3 -c "
+import json, sys
+config = json.load(open('$CONFIG_FILE'))
+plugins = config.get('installed_plugins', [])
+if any(p.get('name') == 'feynman' for p in plugins):
+    sys.exit(0)  # already registered
+else:
+    sys.exit(1)
+" 2>/dev/null; then
+        echo "ℹ️  Plugin already registered in config.json"
+    else
+        python3 -c "
+import json, datetime
+config = json.load(open('$CONFIG_FILE'))
+plugins = config.setdefault('installed_plugins', [])
+# Remove old entry if present
+plugins[:] = [p for p in plugins if p.get('name') != 'feynman']
+plugins.append({
+    'name': 'feynman',
+    'marketplace': 'feynman-copilot',
+    'version': '1.0.0',
+    'installed_at': datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+    'enabled': True,
+    'cache_path': '$PLUGIN_DIR'
+})
+json.dump(config, open('$CONFIG_FILE', 'w'), indent=4)
+print('Done')
+" && echo "✅ Plugin registered in config.json"
+    fi
+else
+    echo "⚠️  $CONFIG_FILE not found — plugin may not be discovered until Copilot CLI is initialized"
+fi
+
 # Clean up old-style installation (skills in ~/.copilot/skills/)
 OLD_SKILLS="$COPILOT_HOME/skills/feynman"
 if [ -L "$OLD_SKILLS" ] || [ -d "$OLD_SKILLS" ]; then
