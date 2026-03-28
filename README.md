@@ -19,7 +19,14 @@ When feynman updates, just re-run the installer — the generator picks up chang
 
 ## Installation
 
-### One command
+### Method 1 — Native plugin marketplace (recommended)
+
+```bash
+copilot plugin marketplace add Maverobot/feynman-copilot
+copilot plugin install feynman@feynman-copilot
+```
+
+### Method 2 — One command
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/install.sh | bash
@@ -27,12 +34,12 @@ curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/inst
 
 **Requirements:** git, python3
 
-### Manual / development
+### Method 3 — Manual / development
 
 ```bash
 git clone --recurse-submodules https://github.com/Maverobot/feynman-copilot.git
 cd feynman-copilot
-python3 generate.py   # generates plugins/feynman/skills/ and plugins/feynman/agents/
+python3 generate.py   # regenerates plugins/feynman/ from the feynman submodule
 ./install.sh          # or manually symlink to ~/.copilot/
 ```
 
@@ -149,6 +156,14 @@ This Copilot CLI package adapts Feynman's workflows with these changes:
 
 ## Updating
 
+### Method 1 users
+
+```bash
+copilot plugin update feynman@feynman-copilot
+```
+
+### Method 2/3 users
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Maverobot/feynman-copilot/main/install.sh | bash
 ```
@@ -175,11 +190,12 @@ feynman-copilot/
 ├── feynman/                    ← git submodule (upstream source of truth)
 ├── generate.py                 ← reads feynman/, writes plugins/feynman/
 ├── plugins/feynman/
-│   ├── skills/*/SKILL.md       ← generated (gitignored)
-│   └── agents/*.md             ← generated (gitignored)
+│   ├── skills/*/SKILL.md       ← generated, committed for native plugin install
+│   └── agents/*.md             ← generated, committed for native plugin install
+├── .github/plugin/
+│   └── marketplace.json        ← marketplace manifest for native plugin install
 ├── install.sh                  ← clone + generate + symlink
 ├── uninstall.sh
-├── .claude-plugin/marketplace.json
 └── README.md
 ```
 
