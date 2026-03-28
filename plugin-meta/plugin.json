@@ -12,5 +12,6 @@
   "license": "MIT",
   "keywords": ["research", "papers", "literature-review", "deep-research", "peer-review", "academic", "arxiv"],
   "skills": "./skills/",
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "commands": "./commands/"
 }
