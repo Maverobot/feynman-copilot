@@ -148,9 +148,11 @@ else
 You have Feynman research skills installed. When the user asks about research, papers,
 literature reviews, or any investigative task, check if a relevant Feynman skill applies.
 
-Available research skills: deep-research, literature-review, paper-writing, peer-review,
-paper-code-audit, source-comparison, replication, alpha-research, eli5, autoresearch,
-docker, modal-compute, runpod-compute, watch, preview, session-log, session-search, jobs.
+Available research skills: feynman:deep-research, feynman:literature-review, feynman:paper-writing,
+feynman:peer-review, feynman:paper-code-audit, feynman:source-comparison, feynman:replication,
+feynman:alpha-research, feynman:eli5, feynman:autoresearch, feynman:docker, feynman:modal-compute,
+feynman:runpod-compute, feynman:watch, feynman:preview, feynman:session-log, feynman:session-search,
+feynman:jobs.
 
 Available research agents: feynman (lead), researcher, reviewer, writer, verifier.
 

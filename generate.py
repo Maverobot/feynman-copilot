@@ -151,7 +151,8 @@ def apply_substitutions(text: str) -> str:
 def generate_skill(skill_dir: str, content: str, description: str) -> str:
     """Wrap skill content with Copilot CLI YAML frontmatter."""
     content = apply_substitutions(content)
-    return f"---\nname: {skill_dir}\ndescription: {description}\n---\n\n{content.strip()}\n"
+    prefixed_name = f"feynman:{skill_dir}"
+    return f"---\nname: {prefixed_name}\ndescription: {description}\n---\n\n{content.strip()}\n"
 
 
 def process_self_contained_skill(skill_name: str, skill_md_path: Path):

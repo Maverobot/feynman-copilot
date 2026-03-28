@@ -1,5 +1,5 @@
 ---
-name: jobs
+name: feynman:jobs
 description: Inspect active background research work including running processes, scheduled follow-ups, and pending tasks. Use when the user asks what's running, checks on background work, or wants to see scheduled jobs.
 ---
 

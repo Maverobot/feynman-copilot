@@ -1,5 +1,5 @@
 ---
-name: modal-compute
+name: feynman:modal-compute
 description: Run GPU workloads on Modal's serverless infrastructure. Use when the user needs remote GPU compute for training, inference, benchmarks, or batch processing and Modal CLI is available.
 ---
 

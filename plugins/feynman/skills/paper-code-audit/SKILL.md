@@ -1,5 +1,5 @@
 ---
-name: paper-code-audit
+name: feynman:paper-code-audit
 description: Compare a paper's claims against its public codebase. Use when the user asks to audit a paper, check code-claim consistency, verify reproducibility of a specific paper, or find mismatches between a paper and its implementation.
 ---
 
