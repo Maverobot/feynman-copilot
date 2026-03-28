@@ -1,5 +1,5 @@
 ---
-name: feynman:paper-writing
+name: paper-writing
 description: Turn research findings into a polished paper-style draft with sections, equations, and citations. Use when the user asks to write a paper, draft a report, write up findings, or produce a technical document from collected research.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: feynman:watch
+name: watch
 description: Set up a recurring research watch on a topic, company, paper area, or product surface. Use when the user asks to monitor a field, track new papers, watch for updates, or set up alerts on a research area.
 ---
 

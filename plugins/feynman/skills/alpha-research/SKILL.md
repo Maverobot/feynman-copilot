@@ -1,5 +1,5 @@
 ---
-name: feynman:alpha-research
+name: alpha-research
 description: Search, read, and query research papers via the `alpha` CLI (alphaXiv-backed). Use when the user asks about academic papers, wants to find research on a topic, needs to read a specific paper, ask questions about a paper, inspect a paper's code repository, or manage paper annotations.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: feynman:preview
+name: preview
 description: Preview Markdown, LaTeX, PDF, or code artifacts in the browser or as PDF. Use when the user wants to review a written artifact, export a report, or view a rendered document.
 ---
 

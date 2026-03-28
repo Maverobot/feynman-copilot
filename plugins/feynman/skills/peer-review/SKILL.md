@@ -1,5 +1,5 @@
 ---
-name: feynman:peer-review
+name: peer-review
 description: Simulate a tough but constructive peer review of an AI research artifact. Use when the user asks for a review, critique, feedback on a paper or draft, or wants to identify weaknesses before submission.
 ---
 

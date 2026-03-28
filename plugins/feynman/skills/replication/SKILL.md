@@ -1,5 +1,5 @@
 ---
-name: feynman:replication
+name: replication
 description: Plan or execute a replication of a paper, claim, or benchmark. Use when the user asks to replicate results, reproduce an experiment, verify a claim empirically, or build a replication package.
 ---
 

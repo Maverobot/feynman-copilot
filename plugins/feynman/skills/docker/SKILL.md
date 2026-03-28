@@ -1,5 +1,5 @@
 ---
-name: feynman:docker
+name: docker
 description: Execute research code inside isolated Docker containers for safe replication, experiments, and benchmarks. Use when the user selects Docker as the execution environment or asks to run code safely, in isolation, or in a sandbox.
 ---
 

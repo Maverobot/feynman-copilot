@@ -1,5 +1,5 @@
 ---
-name: feynman:eli5
+name: eli5
 description: Explain research, papers, or technical ideas in plain English with minimal jargon, concrete analogies, and clear takeaways. Use when the user says "ELI5 this", asks for a simple explanation of a paper or research result, wants jargon removed, or asks what something technically dense actually means.
 ---
 

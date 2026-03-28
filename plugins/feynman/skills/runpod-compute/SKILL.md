@@ -1,5 +1,5 @@
 ---
-name: feynman:runpod-compute
+name: runpod-compute
 description: Provision and manage GPU pods on RunPod for long-running experiments. Use when the user needs persistent GPU compute with SSH access, large datasets, or multi-step experiments.
 ---
 
